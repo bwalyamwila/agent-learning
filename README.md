@@ -24,13 +24,3 @@ python3 calculator_agent.py
 - Agent calls: divide(150, 3) → 50
 - Output: "The answer is 50"
 
-**Key Learnings:**
-- Agents decide which tools to use based on understanding
-- Tool definitions tell Claude what's available
-- Message history allows Claude to track context
-- Multiple tool calls are chained together
-
-**Next:**
-- Add weather tool
-- Explore advanced patterns
-- Build production-quality agents
