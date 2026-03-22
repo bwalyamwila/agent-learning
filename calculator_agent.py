@@ -111,23 +111,17 @@ def agent_loop (user_message: str) -> str:
                     final_response += block.text
             return final_response
 
-# ============================================
-# STEP 4: TEST IT
-# ============================================
 if __name__ == "__main__":
     print("=== Calculator Agent ===\n")
     
-    # Test 1: Simple math
     print("Test 1: What is 15 * 7?")
     result = agent_loop("What is 15 * 7?")
     print(f"Agent: {result}\n")
     
-    # Test 2: Multiple operations
     print("Test 2: What is 100 + 50, then divide by 3?")
     result = agent_loop("What is 100 + 50, then divide by 3?")
     print(f"Agent: {result}\n")
     
-    # Test 3: Edge case
     print("Test 3: What's 10 divided by 0?")
     result = agent_loop("What's 10 divided by 0?")
     print(f"Agent: {result}\n")
