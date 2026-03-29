@@ -30,6 +30,20 @@ tools = [
           "required" : ["operation", "a", "b"] 
       }   
 
+    },
+    {
+        "name" : "weather",
+        "description" : "This tool provides the current weather for a given location.",
+        "input_schema" : {
+            "type" : "object",
+            "properties" : {
+                "city" : {
+                    "type" : "string",
+                    "description" : "The city name for which to provide weather information"
+                }
+            },
+            "required" : ["city"]
+        }
     }
 ]
 
@@ -46,6 +60,25 @@ def calculator( operation: str, a: float, b: float) -> float:
         return a / b
     else:
         return "Error: Unknown operation"
+    
+
+def weather (city: str) -> str:
+    weather_data = {
+        "new york": "72°F, sunny with light breeze",
+        "london": "55°F, rainy",
+        "tokyo": "68°F, cloudy",
+        "sydney": "77°F, sunny",
+        "paris": "60°F, partly cloudy",
+        "dubai": "95°F, hot and dry",
+    }
+    
+    city_name = city.lower()
+    if city_name in weather_data:
+        return weather_data[city_name]
+    else:
+        return f"Weather data for {city} is not available."
+
+
 
 
 def agent_loop (user_message: str) -> str:
@@ -58,7 +91,7 @@ def agent_loop (user_message: str) -> str:
         response = client.messages.create(
             model = "claude-opus-4-1-20250805",
             max_tokens = 1024,
-            tools = tools,  # Tell Claude what tools are available
+            tools = tools,  
             messages = messages
         )
 
@@ -83,6 +116,8 @@ def agent_loop (user_message: str) -> str:
 
                 if tool_name == "calculator":
                     result = calculator(**tool_input)
+                elif tool_name == "weather":
+                    result = weather(**tool_input)
                 else:
                     result = "Unknown Tool"
 
@@ -125,4 +160,16 @@ if __name__ == "__main__":
     print("Test 3: What's 10 divided by 0?")
     result = agent_loop("What's 10 divided by 0?")
     print(f"Agent: {result}\n")
+
+    print("=== Weather Agent ===\n")
+    print("Test 4: What's the weather in New York?")
+    result = agent_loop("What's the weather in New York?")
+    print(f"Agent: {result}\n")
+
+    print("Test 5: What's the weather like in Cape Town?")
+    result = agent_loop("What's the weather like in Cape Town?")
+    print(f"Agent: {result}\n")
+
+
+
 
